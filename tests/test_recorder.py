@@ -87,6 +87,26 @@ def test_stalled_source_is_restarted(tmp_path, monkeypatch):
     assert asyncio.run(go()), "watchdog tidak menyalakan ulang pipeline yang macet"
 
 
+def test_unwritable_storage_is_logged_and_retried(tmp_path, monkeypatch, caplog):
+    """mkdir folder rekaman gagal (izin NAS salah): task tidak boleh mati tanpa jejak."""
+    blocked = tmp_path / "bukan-folder"
+    blocked.write_text("")                # path di bawah file biasa: mkdir selalu gagal, juga sebagai root
+
+    async def go():
+        mgr = RecorderManager(StorageConfig(path=blocked, segment_seconds=10), LiveConfig())
+        monkeypatch.setattr(CameraRecorder, "source_cmd", fake_source(tmp_path))
+        mgr.start(CAM)
+        rec = mgr.recs["fake"]
+        ok = await wait_for(lambda: rec.restarts >= 1, timeout=5)
+        alive = not mgr._tasks["fake"].done()
+        await mgr.stop_all()
+        return ok, alive
+
+    ok, alive = asyncio.run(go())
+    assert ok and alive, "pipeline harus dicoba lagi, bukan berhenti"
+    assert "fake pipeline error" in caplog.text
+
+
 def test_stuck_recorder_ffmpeg_is_restarted(tmp_path, monkeypatch):
     """ffmpeg perekam yang tidak membaca stdin (mis. NAS hang) tidak boleh menahan pipeline selamanya."""
     import recorder

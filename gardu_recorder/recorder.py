@@ -107,9 +107,9 @@ class CameraRecorder:
     async def run_forever(self):
         backoff = 2
         while True:
-            self._ensure_dirs()
             started = time.time()
-            try:
+            try:                               # mkdir di dalam try: folder rekaman tanpa izin tulis tercatat di log,
+                self._ensure_dirs()            # bukan mematikan task tanpa jejak
                 await self._run_once()
             except Exception:
                 log.exception("%s pipeline error", self.cam.id)
@@ -268,5 +268,8 @@ class RecorderManager:
     async def _dir_maker(self):
         while True:    # jaga folder hari ini & besok selalu ada (ffmpeg tidak membuat folder)
             for rec in list(self.recs.values()):
-                rec._ensure_dirs()
+                try:
+                    rec._ensure_dirs()
+                except OSError as err:
+                    log.error("%s folder rekaman tidak bisa dibuat: %s", rec.cam.id, err)
             await asyncio.sleep(3600)
