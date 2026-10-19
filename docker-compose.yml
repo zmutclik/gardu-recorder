@@ -13,6 +13,7 @@ services:
       GARDU_STORAGE_PATH: /recordings
     network_mode: host      # akses langsung ke kamera :8800 dan MediaMTX (127.0.0.1:8554 / :8888)
     volumes:
+      - ./gardu_recorder:/app:ro   # kode aplikasi; update: git pull && docker compose restart gardu-recorder
       - /volume2/gardu/recordings:/recordings
       - gardu-data:/data    # SQLite gardu.db (kamera, log audit) + /data/exports; sertakan dalam cadangan
     healthcheck:

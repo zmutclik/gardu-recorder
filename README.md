@@ -33,7 +33,9 @@ cd gardu_recorder && ../.venv/bin/uvicorn main:app --reload
 
 ## Produksi
 
-`docker compose up -d` dari root (`docker-compose.yml` + `Dockerfile` di root, `.env` yang sama dari `.env.example`). Cadangkan volume `gardu-data` **dan**
+`docker compose up -d` dari root (`docker-compose.yml` + `Dockerfile` di root, `.env` yang sama dari `.env.example`).
+Kode `gardu_recorder/` di-mount ke container (tidak disalin ke image), jadi update cukup `git pull && docker compose
+restart gardu-recorder`; `docker compose build` hanya bila `requirements.txt` atau `Dockerfile` berubah. Cadangkan volume `gardu-data` **dan**
 `GARDU_DB_KEY`: tanpa kunci itu password kamera di database tidak bisa dibaca lagi. Container berjalan sebagai
 user non-root `GARDU_UID`/`GARDU_GID` (.env): samakan dengan pemilik folder rekaman di NAS. Volume `gardu-data`
 yang dibuat image lama (milik root) perlu `chown` sekali ke UID itu.
