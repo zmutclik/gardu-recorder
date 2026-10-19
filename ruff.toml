@@ -1,5 +1,5 @@
 line-length = 120
-extend-exclude = ["gardu_recorder/vendor", "wireframe"]
+extend-exclude = ["gardu_recorder/vendor"]
 
 [lint]
 select = ["E", "F", "I", "B", "UP"]

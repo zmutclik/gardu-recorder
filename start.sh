@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 # Jalankan aplikasi Gardu (dev) di http://localhost:8035
 #   ./start.sh            aplikasi + MediaMTX untuk live view (bila GARDU_LIVE_ENABLED=true di .env)
-#   ./start.sh wireframe  prototipe wireframe statis di port 8036
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 PORT=8035
@@ -17,12 +16,6 @@ stop_port() {   # matikan server lama di port ini bila ada
     kill $pids; sleep 1; kill -9 $pids 2>/dev/null || true
   fi
 }
-
-if [ "${1:-}" = "wireframe" ]; then
-  stop_port 8036
-  echo "Wireframe di http://localhost:8036/gardu/"
-  cd "$ROOT/wireframe" && exec python3 -m http.server 8036
-fi
 
 # venv + dependensi (sekali)
 if [ ! -x "$ROOT/.venv/bin/uvicorn" ]; then

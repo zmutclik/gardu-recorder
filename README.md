@@ -1,7 +1,6 @@
 # Gardu (NVR V380)
 
-Rekam + web untuk kamera V380 (protokol asli, port 8800). Panduan lengkap: `panduan_pembuatan_gardu-recorder.md`;
-wireframe: `wireframe/gardu/` (`./start.sh` → http://localhost:8035/gardu/).
+Rekam + web untuk kamera V380 (protokol asli, port 8800).
 
 **Status**: tahap 1–6 (pipeline rekam, watchdog, cleaner, login, Dashboard, Kamera, audit log, Rekaman, Live View,
 Ekspor) selesai dan teruji dengan sumber palsu; live view juga diuji dengan MediaMTX v1.21.1 sungguhan. Belum diuji:

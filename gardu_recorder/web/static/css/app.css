@@ -1,4 +1,4 @@
-/* Gardu — gaya wireframe (hitam-putih). Menu lain (Live, Rekaman, Ekspor) menambah bagian sendiri di bawah. */
+/* Gardu — gaya hitam-putih. Menu lain (Live, Rekaman, Ekspor) menambah bagian sendiri di bawah. */
 /* Warna lewat variabel: tema terang default, gelap mengikuti sistem atau pilihan tombol tema (data-theme di <html>). */
 :root { color-scheme: light; --bg: #fff; --fg: #000; --fg2: #333; --muted: #666; --dim: #999; --line: #ccc;
   --soft: #eee; --overlay: rgba(255,255,255,.88); }
