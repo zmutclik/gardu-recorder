@@ -8,6 +8,7 @@
   <meta name="htmx-config" content='{"allowEval": false, "includeIndicatorStyles": false, "historyCacheSize": 0}'>
   <title>{% block title %}Gardu{% endblock %}</title>
   <link rel="stylesheet" href="{{ static_url('css/app.css') }}">
+  <script src="{{ static_url('js/theme.js') }}"></script>
   <script defer src="{{ static_url('js/vendor/htmx.min.js') }}"></script>
   <script defer src="{{ static_url('js/app.js') }}"></script>
   {% block scripts %}{% endblock %}
@@ -23,6 +24,7 @@
     <a href="/export"{% if nav_path.startswith('/export') %} class="on"{% endif %}>Ekspor</a>
     <a href="/cameras"{% if nav_path.startswith('/cameras') %} class="on"{% endif %}>Kamera</a>
     <span class="sp"></span>
+    <button type="button" data-theme-toggle aria-label="Ganti tema">☾</button>
     <form method="post" action="/logout"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button type="submit">Keluar</button></form>
     {% endif %}
   </nav>
