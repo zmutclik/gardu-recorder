@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live View — 1810 Wireframes</title>
+  <link rel="stylesheet" href="base.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-opt1.css">
+  <link rel="stylesheet" href="styles-opt2.css">
+  <link rel="stylesheet" href="styles-opt3.css">
+  <link rel="stylesheet" href="styles-opt4.css">
+  <link rel="stylesheet" href="styles-opt5.css">
+</head>
+<body>
+
+<div class="completion-banner" id="completion-banner" style="display:none;">
+  ✦ Visual designs complete — all options now have Clean + Polished variants
+  <button onclick="this.parentElement.style.display='none'" style="float:right;background:none;border:none;cursor:pointer;font-size:16px;">×</button>
+</div>
+
+<div class="page-wrapper">
+
+  <div class="title-bar">
+    <span><span id="feature-name">Live View</span> — <span id="project-name">Gardu</span></span>
+    <span class="rec">★ Recommended: Option <span id="rec-number">2</span></span>
+  </div>
+
+  <nav class="main-tabs">
+    <button class="tab-btn active" data-tab="option-1">1: Grid Pilih</button>
+    <button class="tab-btn" data-tab="option-2">2: Fokus + Strip</button>
+    <button class="tab-btn" data-tab="option-3">3: Denah</button>
+    <button class="tab-btn" data-tab="option-4">4: Patroli</button>
+    <button class="tab-btn" data-tab="option-5">5: Live + Mundur</button>
+    <button class="tab-btn" data-tab="summary">Summary</button>
+  </nav>
+
+  <!-- ===== OPTION 1 ===== -->
+  <div class="option-panel active" id="option-1">
+    <h2>Option 1: <span class="opt-name">Grid Pilih</span></h2>
+    <p class="option-description">Grid 1/4/9 kamera sesuai panduan, klik untuk layar penuh.</p>
+    <div class="sub-tab-bar" id="frame-opt1-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch1"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch1)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint1"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint1)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt1">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond1"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond1)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt1">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">gardu.local:8080/live</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="app"><div class="topnav"><span class="brand">GARDU</span><a href="#">Dashboard</a><a href="#" class=on>Live View</a><a href="#">Rekaman</a><a href="#">Ekspor</a><a href="#">Kamera</a><span class="sp"></span><a href="#">Keluar</a></div><div class="page">
+<div class="bar"><b>Live View</b><span class="muted">8 dari 9 kamera online</span><span class="sp"></span>
+ <span class="muted">Tampilan</span>
+ <span class="seg" id="g-seg"><button class="btn" onclick="gSet(1)">1</button><button class="btn" onclick="gSet(4)">4</button><button class="btn on" onclick="gSet(9)">9</button></span> <span class="wf-marker">①</span>
+ <button class="btn" onclick="gFull()">⛶ Layar penuh</button></div>
+<div class="grid g9" id="g-grid"><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:00</span><span class="nm">IGD Pintu Masuk</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:01</span><span class="nm">IGD Lobby</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:02</span><span class="nm">Parkir Depan</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:03</span><span class="nm">Koridor Poli</span></div><div class="tile offline "><span>⚠ Offline — mencoba ulang (restart 3×)</span><span class="nm">Apotek</span><span class="st"><span class="tag off">OFFLINE</span></span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:05</span><span class="nm">Gerbang Belakang</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:06</span><span class="nm">Lorong Rawat Inap</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:07</span><span class="nm">Kasir</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:08</span><span class="nm">Lab</span></div></div> <div class="g-strip hide" id="g-strip"></div> <span class="wf-marker">③</span> <span class="wf-marker">②</span>
+<div class="hint">Jeda HLS ±2–6 dtk. Bila browser tak bisa memutar H.265: tampil pesan "Format video tidak didukung browser ini" + tombol Unduh/VLC.</div></div></div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Catatan UX</h3><ul><li>① Pilihan 1/4/9 kamera sesuai panduan; klik tombol untuk mengganti kolom (fungsional).</li><li>② Klik satu kamera → tampil 1 kamera penuh (cermin menu Live View di panduan). Kamera offline tetap menempati slot dengan pesan jelas.</li><li>③ Pada layar penuh (1 kamera), thumbnail kamera lain berjajar di bawah; klik thumbnail untuk berganti kamera tanpa kembali ke grid. Thumbnail bisa berupa snapshot berkala agar hemat stream; kamera offline tetap terlihat berstatus offline.</li><li>④ Semua kamera memutar stream sekaligus: beban browser dan jaringan naik pada tampilan 9.</li></ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 2 ===== -->
+  <div class="option-panel" id="option-2">
+    <h2>Option 2: <span class="opt-name">Fokus + Strip</span></h2>
+    <p class="option-description">Satu kamera besar, kamera lain sebagai thumbnail ringan di samping.</p>
+    <div class="sub-tab-bar" id="frame-opt2-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch2"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch2)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint2"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint2)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt2">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond2"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond2)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt2">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">gardu.local:8080/live</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="app"><div class="topnav"><span class="brand">GARDU</span><a href="#">Dashboard</a><a href="#" class=on>Live View</a><a href="#">Rekaman</a><a href="#">Ekspor</a><a href="#">Kamera</a><span class="sp"></span><a href="#">Keluar</a></div><div class="page">
+<div class="bar"><b>Live View</b><span class="muted">Fokus: <b id="f-name">IGD Pintu Masuk</b></span><span class="sp"></span>
+ <button class="btn" onclick="fNext(-1)">◀ Sebelumnya</button><button class="btn" onclick="fNext(1)">Berikutnya ▶</button>
+ <button class="btn">Rekaman kamera ini →</button></div>
+<div class="split">
+ <div class="main"><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:02</span><span class="nm">IGD Pintu Masuk</span></div>
+  <div class="bar" style="margin-top:8px"><span class="muted">igd-pintu · 192.168.10.51 · 2304×2592 · 16 fps · 3,1 Mbps</span><span class="sp"></span><button class="btn sm">Snapshot</button><button class="btn sm">⛶</button></div></div> <span class="wf-marker">①</span>
+ <div class="rail" id="f-rail"><div class="tile sel"><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm"></span><span class="nm">IGD Pintu Masuk</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm"></span><span class="nm">IGD Lobby</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm"></span><span class="nm">Parkir Depan</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm"></span><span class="nm">Koridor Poli</span></div><div class="tile offline "><span>⚠ Offline — mencoba ulang (restart 3×)</span><span class="nm">Apotek</span><span class="st"><span class="tag off">OFFLINE</span></span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm"></span><span class="nm">Gerbang Belakang</span></div><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm"></span><span class="nm">Lorong Rawat Inap</span></div></div> <span class="wf-marker">②</span>
+</div>
+<div class="hint">Jeda HLS ±2–6 dtk. Bila browser tak bisa memutar H.265: tampil pesan "Format video tidak didukung browser ini" + tombol Unduh/VLC.</div></div></div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Catatan UX</h3><ul><li>① Satu kamera besar sebagai fokus; detail teknis (IP, resolusi, bitrate) di bawahnya.</li><li>② Strip thumbnail kamera lain: klik untuk menukar fokus (fungsional). Thumbnail bisa berupa snapshot yang diperbarui tiap beberapa detik, bukan stream — hemat beban.</li><li>③ Pintasan: Berikutnya/Sebelumnya dan tombol "Rekaman kamera ini" langsung ke menu Rekaman.</li></ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 3 ===== -->
+  <div class="option-panel" id="option-3">
+    <h2>Option 3: <span class="opt-name">Denah</span></h2>
+    <p class="option-description">Pilih kamera dari titik pada denah lantai.</p>
+    <div class="sub-tab-bar" id="frame-opt3-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch3"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch3)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint3"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint3)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond3"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond3)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt3">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">gardu.local:8080/live</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="app"><div class="topnav"><span class="brand">GARDU</span><a href="#">Dashboard</a><a href="#" class=on>Live View</a><a href="#">Rekaman</a><a href="#">Ekspor</a><a href="#">Kamera</a><span class="sp"></span><a href="#">Keluar</a></div><div class="page">
+<div class="bar"><b>Live View</b><span class="muted">Klik titik kamera pada denah</span><span class="sp"></span><button class="btn">Ganti denah ▾</button> <button class="btn">Lantai 1 ▾</button></div>
+<div class="mapwrap">
+ <div class="floor"><div class="room" style="left:10px;top:30px;width:200px;height:110px">IGD</div><div class="room" style="left:230px;top:10px;width:150px;height:70px">Parkir</div><div class="room" style="left:10px;top:160px;width:140px;height:130px">Poli</div><div class="room" style="left:170px;top:160px;width:90px;height:60px">Apotek</div><div class="room" style="left:280px;top:100px;width:100px;height:190px">Rawat Inap</div><div class="pin sel" style="left:40px;top:60px" data-n="IGD Pintu Masuk" onclick="mapSel(this)">1</div><div class="pin" style="left:150px;top:90px" data-n="IGD Lobby" onclick="mapSel(this)">2</div><div class="pin" style="left:290px;top:40px" data-n="Parkir Depan" onclick="mapSel(this)">3</div><div class="pin" style="left:90px;top:190px" data-n="Koridor Poli" onclick="mapSel(this)">4</div><div class="pin off" style="left:230px;top:210px" data-n="Apotek" onclick="mapSel(this)">5</div><div class="pin" style="left:330px;top:130px" data-n="Gerbang Belakang" onclick="mapSel(this)">6</div><div class="pin" style="left:40px;top:270px" data-n="Lorong Rawat Inap" onclick="mapSel(this)">7</div><div class="pin" style="left:190px;top:290px" data-n="Kasir" onclick="mapSel(this)">8</div><div class="pin" style="left:330px;top:270px" data-n="Lab" onclick="mapSel(this)">9</div></div> <span class="wf-marker">①</span>
+ <div class="panel"><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:02</span><span class="nm">IGD Pintu Masuk</span></div><b id="m-name">IGD Pintu Masuk</b><div class="muted">Kamera #1 · online</div>
+  <div class="bar" style="margin-top:8px"><button class="btn sm">Layar penuh</button><button class="btn sm">Rekaman</button></div>
+  <div class="muted" style="margin-top:8px">Pin ⚪ abu = offline</div></div> <span class="wf-marker">②</span>
+</div>
+<div class="hint">Jeda HLS ±2–6 dtk. Bila browser tak bisa memutar H.265: tampil pesan "Format video tidak didukung browser ini" + tombol Unduh/VLC.</div></div></div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Catatan UX</h3><ul><li>① Denah lantai dengan titik kamera bernomor; kamera offline berwarna abu. Cocok untuk petugas yang mencari "kamera di dekat lokasi kejadian".</li><li>② Panel kanan memutar satu stream saja saat dipilih — hanya 1 stream aktif. Perlu upload denah + posisi kamera (tambahan di `cameras.yaml`: x, y).</li><li>③ Menambah pekerjaan setup; tidak cocok jika kamera banyak dan denah sering berubah.</li></ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 4 ===== -->
+  <div class="option-panel" id="option-4">
+    <h2>Option 4: <span class="opt-name">Patroli</span></h2>
+    <p class="option-description">Layar pantau yang berpindah antar kamera otomatis.</p>
+    <div class="sub-tab-bar" id="frame-opt4-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch4"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch4)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint4"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint4)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond4"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond4)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt4">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">gardu.local:8080/live</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="app"><div class="topnav"><span class="brand">GARDU</span><a href="#">Dashboard</a><a href="#" class=on>Live View</a><a href="#">Rekaman</a><a href="#">Ekspor</a><a href="#">Kamera</a><span class="sp"></span><a href="#">Keluar</a></div><div class="page">
+<div class="bar"><b>Live View · Patroli</b><span class="muted">Berpindah otomatis tiap</span>
+ <span class="seg"><button class="btn sm">5 dtk</button><button class="btn sm on">10 dtk</button><button class="btn sm">30 dtk</button></span> <span class="wf-marker">①</span>
+ <span class="sp"></span><button class="btn" id="p-btn" onclick="pToggle()">❚❚ Jeda</button><button class="btn">Lewati ▶</button></div>
+<div class="patrol"><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:02</span><span class="nm">IGD Pintu Masuk</span></div>
+ <div class="prog"><i id="p-prog"></i></div>
+ <div class="bar"><b id="p-name">1/8 · IGD Pintu Masuk</b><span class="sp"></span><span class="muted" id="p-next">Berikutnya: IGD Lobby</span></div> <span class="wf-marker">②</span>
+ <div class="dots"><b class="on"></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></div>
+ <div class="muted" style="margin-top:8px">Kamera offline otomatis dilewati dan dicatat: "Apotek dilewati (offline)".</div> <span class="wf-marker">③</span>
+</div>
+<div class="hint">Jeda HLS ±2–6 dtk. Bila browser tak bisa memutar H.265: tampil pesan "Format video tidak didukung browser ini" + tombol Unduh/VLC.</div></div></div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Catatan UX</h3><ul><li>① Mode "layar pantau" untuk monitor yang dibiarkan menyala: satu stream aktif, bergantian otomatis. Interval bisa diatur.</li><li>② Bilah progres dan penunjuk kamera berikutnya; jeda otomatis saat pengguna menggerakkan mouse/klik.</li><li>③ Kamera offline dilewati agar layar tidak kosong. Kelemahan: kurang cocok untuk mengamati beberapa area bersamaan.</li></ul>
+    </div>
+  </div>
+
+  <!-- ===== OPTION 5 ===== -->
+  <div class="option-panel" id="option-5">
+    <h2>Option 5: <span class="opt-name">Live + Mundur</span></h2>
+    <p class="option-description">Live view dengan bilah waktu untuk mundur beberapa menit.</p>
+    <div class="sub-tab-bar" id="frame-opt5-tabs">
+      <button class="sub-tab-btn active" data-variant="wireframe" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTsketch5"><g fill="#555" stroke="#fff" stroke-linejoin="round" stroke-width="4"><rect width="36" height="36" x="6" y="6" rx="3"/><path stroke-linecap="round" d="M18.6 16h10.8l3.6 4.706L24 32l-9-11.294z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTsketch5)"/></svg>
+        <span class="sub-tab-label">Wireframe</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="clean" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTpaint5"><g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="4"><path d="m15.536 22.898l9.899 9.9m-9.899-9.9L7.05 31.383a7 7 0 1 0 9.9 9.9l8.485-8.486m-9.899 0l-4.243 4.243"/><path fill="#555" d="m25.435 32.797l14.907-6.432c2.688-1.16 3.809-4.379 2.086-6.745C38.264 13.903 32.65 8.89 28.51 5.823c-2.29-1.696-5.33-.64-6.46 1.975l-6.514 15.1z"/></g></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTpaint5)"/></svg>
+        <span class="sub-tab-label">Clean</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+      <button class="sub-tab-btn" data-variant="polished" data-frame="frame-opt5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 48 48"><defs><mask id="ipTdiamond5"><path fill="#555" stroke="#fff" stroke-width="4" d="M5.939 13.934L23.036 4.53a2 2 0 0 1 1.928 0l17.097 9.404a2 2 0 0 1 .683 2.888l-17.098 24.79a2 2 0 0 1-3.292 0L5.256 16.823a2 2 0 0 1 .683-2.888Z"/></mask></defs><path fill="currentColor" d="M0 0h48v48H0z" mask="url(#ipTdiamond5)"/></svg>
+        <span class="sub-tab-label">Polished</span>
+        <span class="sub-tab-badge">generating...</span>
+      </button>
+    </div>
+    <div class="browser-frame wireframe" id="frame-opt5">
+      <div class="browser-chrome">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url">gardu.local:8080/live</div>
+        <div class="browser-controls">─ □ ✕</div>
+      </div>
+      <div class="browser-content">
+        <div class="app"><div class="topnav"><span class="brand">GARDU</span><a href="#">Dashboard</a><a href="#" class=on>Live View</a><a href="#">Rekaman</a><a href="#">Ekspor</a><a href="#">Kamera</a><span class="sp"></span><a href="#">Keluar</a></div><div class="page">
+<div class="bar"><b>Live View</b><span class="seg"><button class="btn on">Satu kamera</button><button class="btn">Grid 4</button></span>
+ <select class="btn"><option>IGD Pintu Masuk</option><option>IGD Lobby</option></select><span class="sp"></span>
+ <button class="btn on" id="r-live" onclick="rMode(0)">● LIVE</button><button class="btn" onclick="rMode(1)">⏪ Mundur 5 mnt</button></div>
+<div class="grid g1"><div class="tile "><span class="play">▶</span><span class="st"><span class="tag">● LIVE</span></span><span class="tm">14:37:02</span><span class="nm">IGD Pintu Masuk</span></div></div>
+<div class="scrub" id="r-scrub"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i class="gap"></i><i class="gap"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><span class="head hide" id="r-head"></span><span class="now"></span></div> <span class="wf-marker">①</span>
+<div class="ticks"><span>14:00</span><span>14:15</span><span>14:30</span><span>Sekarang</span></div>
+<div class="bar" style="margin-top:8px"><span class="muted" id="r-msg">Menonton live (jeda ±4 dtk)</span><span class="sp"></span>
+ <button class="btn sm">⏮ 10 dtk</button><button class="btn sm">1×</button><button class="btn sm">Kembali ke LIVE</button><button class="btn sm">Buka di Rekaman →</button></div> <span class="wf-marker">②</span>
+<div class="hint">Jeda HLS ±2–6 dtk. Bila browser tak bisa memutar H.265: tampil pesan "Format video tidak didukung browser ini" + tombol Unduh/VLC.</div></div></div>
+      </div>
+    </div>
+    <div class="wf-annotations">
+      <h3>Catatan UX</h3><ul><li>① Satu kamera dengan bilah waktu 1 jam terakhir (kotak per menit, menit tanpa rekaman diberi warna lain — sama dengan timeline Rekaman).</li><li>② Tombol Mundur beralih dari HLS live ke segmen mp4 terakhir di NAS (sambung otomatis) lalu "Kembali ke LIVE". Mengubah live jadi alat tinjau cepat ("apa yang baru terjadi?").</li><li>③ Membutuhkan logika pemutar ganda (HLS + mp4) di halaman live — kerja frontend paling berat.</li></ul>
+    </div>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <div class="option-panel" id="summary">
+    
+<h2>Ringkasan — Live View Gardu</h2>
+<p class="option-description">Tujuan: pantau banyak kamera dengan cepat, beban browser/jaringan rendah (Overall UX).</p>
+<table class="sum"><tr><th>Opsi</th><th>Pendekatan</th><th>Skor</th></tr>
+<tr><td>1: Grid Pilih</td><td>Grid 1/4/9, klik untuk layar penuh. Sesuai panduan.</td><td>★★★☆☆</td></tr>
+<tr><td>2: Fokus + Strip</td><td>Satu stream besar + thumbnail ringan; beban rendah.</td><td>★★★★★</td></tr>
+<tr><td>3: Denah</td><td>Pilih kamera dari posisi di denah.</td><td>★★★☆☆</td></tr>
+<tr><td>4: Patroli</td><td>Rotasi otomatis untuk layar pantau.</td><td>★★★☆☆</td></tr>
+<tr><td>5: Live + Mundur</td><td>Live dengan peninjauan 1 jam terakhir.</td><td>★★★★☆</td></tr></table>
+<div class="rec-box"><b>★ Rekomendasi: Opsi 2 (Fokus + Strip).</b> Hanya satu stream H.265/HLS penuh yang aktif, sisanya snapshot, jadi cocok dengan batas satu koneksi per kamera dan PC petugas yang lemah. Opsi 1 tetap jadi tampilan "Grid" opsional, dan "Mundur" dari Opsi 5 bisa ditambahkan kemudian.</div>
+  </div>
+
+</div>
+
+<footer class="skill-footer">
+  This design was crafted by the <a href="https://github.com/Magdoub/claude-wireframe-skill">Wireframe skill</a> — follow on GitHub
+</footer>
+
+<script>
+(function() {
+  // Main tab switching
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var panels = document.querySelectorAll('.option-panel');
+  tabBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      tabBtns.forEach(function(b) { b.classList.remove('active'); });
+      panels.forEach(function(p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      var target = document.getElementById(btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+
+  // Sub-tab switching
+  var subBtns = document.querySelectorAll('.sub-tab-btn');
+  subBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var frameId = btn.dataset.frame;
+      var siblings = btn.parentElement.querySelectorAll('.sub-tab-btn');
+      siblings.forEach(function(s) { s.classList.remove('active'); });
+      btn.classList.add('active');
+      var frame = document.getElementById(frameId);
+      if (frame) {
+        frame.classList.remove('wireframe', 'clean', 'polished');
+        frame.classList.add(btn.dataset.variant);
+      }
+    });
+  });
+
+  // Completion banner — one-time load check
+  window.addEventListener('load', function() {
+    var badges = document.querySelectorAll('.sub-tab-badge');
+    var anyVisible = false;
+    badges.forEach(function(b) {
+      if (getComputedStyle(b).display !== 'none') anyVisible = true;
+    });
+    if (!anyVisible && badges.length > 0) {
+      var banner = document.getElementById('completion-banner');
+      if (banner) {
+        banner.style.display = 'block';
+        setTimeout(function() { banner.style.display = 'none'; }, 8000);
+      }
+    }
+  });
+})();
+</script>
+
+<script>
+var CAMN=["IGD Pintu Masuk", "IGD Lobby", "Parkir Depan", "Koridor Poli", "Apotek", "Gerbang Belakang", "Lorong Rawat Inap"];
+var gSel=0,gN=9;
+function gRender(){var g=document.getElementById('g-grid'),t=g.children,s=document.getElementById('g-strip');g.className='grid g'+gN;
+ for(var i=0;i<t.length;i++)t[i].classList.toggle('hide',gN==1?i!=gSel:i>=gN);
+ document.querySelectorAll('#g-seg .btn').forEach(function(b){b.classList.toggle('on',b.textContent==gN)});
+ s.classList.toggle('hide',gN!=1);s.innerHTML='';
+ if(gN==1)for(var i=0;i<t.length;i++){if(i==gSel)continue;var c=t[i].cloneNode(true);c.classList.remove('hide');c.dataset.i=i;
+  c.onclick=function(){gSel=+this.dataset.i;gRender()};s.appendChild(c);}}
+function gSet(n){gN=n;gRender()}
+function gFull(){gN=1;gRender()}
+document.querySelectorAll('#g-grid .tile').forEach(function(t,i){t.onclick=function(){gSel=i;gN=1;gRender()}});
+var fi=0;function fSel(i){fi=(i+CAMN.length)%CAMN.length;document.getElementById('f-name').textContent=CAMN[fi];
+ document.querySelectorAll('#f-rail .tile').forEach(function(t,k){t.classList.toggle('sel',k==fi)});
+ var m=document.querySelector('#option-2 .main .tile .nm');if(m)m.textContent=CAMN[fi];}
+function fNext(d){fSel(fi+d)}
+document.querySelectorAll('#f-rail .tile').forEach(function(t,k){t.onclick=function(){fSel(k)}});
+function mapSel(p){document.querySelectorAll('.pin').forEach(function(x){x.classList.remove('sel')});p.classList.add('sel');document.getElementById('m-name').textContent=p.dataset.n;
+ document.querySelector('#option-3 .panel .nm').textContent=p.dataset.n;}
+var pp=false;function pToggle(){pp=!pp;document.getElementById('p-btn').textContent=pp?'▶ Lanjut':'❚❚ Jeda'}
+function rMode(b){document.getElementById('r-live').classList.toggle('on',!b);document.getElementById('r-head').classList.toggle('hide',!b);
+ document.getElementById('r-msg').textContent=b?'Memutar rekaman 14:32:10 (segmen mp4 dari NAS)':'Menonton live (jeda ±4 dtk)';}
+</script>
+</body>
+</html>

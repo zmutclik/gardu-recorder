@@ -1,0 +1,8 @@
+<div class="modal">
+<div class="dlg" role="dialog" aria-modal="true">
+  <b>Hapus kamera “{{ cam.name }}”?</b>
+  <p>Pipeline kamera dihentikan dan kamera hilang dari daftar. <b>Rekaman yang sudah ada di NAS tidak dihapus</b>; dibersihkan sesuai retensi.</p>
+  <div class="bar"><span class="sp"></span><button type="button" class="btn" data-close>Batal</button>
+    <button type="button" class="btn on danger" hx-delete="/cameras/{{ cam.id }}" hx-target="#modal" hx-swap="innerHTML">Hapus kamera</button></div>
+</div>
+</div>

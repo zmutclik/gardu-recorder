@@ -1,0 +1,4 @@
+{% if error %}<div class="err">⚠ {{ error }}</div>
+{% else %}<div class="muted">{{ mode }}</div>
+<ul class="ts">{% for st in steps %}<li class="{{ st.status }}">{{ {'ok': '✔', 'warn': '⚠', 'fail': '✘', 'skip': '—'}[st.status] }} {{ st.label }}{% if st.detail %}<span class="muted">{{ st.detail }}</span>{% endif %}</li>{% endfor %}</ul>
+<div class="vd">{{ verdict }}</div>{% endif %}

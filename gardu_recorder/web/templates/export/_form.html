@@ -1,0 +1,22 @@
+<form id="x-form" hx-post="/export" hx-target="this" hx-swap="outerHTML" hx-disabled-elt="find button[type=submit]"
+  hx-disinherit="*">
+  {# hx-disinherit: ringkasan (#x-sum) di dalam form tidak boleh mewarisi target form, kalau tidak seluruh form tertimpa #}
+  <div class="form">
+    <label class="field wide">Kamera<select name="cam">
+      {% for c in cams %}<option value="{{ c.id }}"{% if c.id == v.cam %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
+    </select></label>
+    <label class="field wide">Tanggal<input type="date" name="tgl" value="{{ v.tgl }}" required></label>
+    {% for k, label in [('mulai', 'Jam mulai'), ('selesai', 'Jam selesai')] %}{% set hm = v[k].split(':') %}
+    <div class="field">{{ label }}<span class="hm">
+      <select name="{{ k }}_j" aria-label="{{ label }}: jam">{% for h in range(24) %}{% set x = '%02d' % h %}<option{% if hm[0] == x %} selected{% endif %}>{{ x }}</option>{% endfor %}</select>
+      <b>:</b>
+      <select name="{{ k }}_m" aria-label="{{ label }}: menit">{% for m in range(60) %}{% set x = '%02d' % m %}<option{% if hm[1:] and hm[1] == x %} selected{% endif %}>{{ x }}</option>{% endfor %}</select>
+    </span></div>
+    {% endfor %}
+    <label class="field wide">Nama pemohon (dicatat di log)<input name="pemohon" value="{{ v.pemohon }}" maxlength="80"
+      placeholder="mis. Siti – Satpam shift pagi" autocomplete="off" required></label>
+  </div>
+  {% include "export/_summary.html" %}
+  <button type="submit" class="btn on">＋ Tambah ke antrean</button>
+</form>
+{% if toast %}{% with message = toast %}{% include "components/_toast_oob.html" %}{% endwith %}{% endif %}

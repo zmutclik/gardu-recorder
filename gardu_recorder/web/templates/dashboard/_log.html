@@ -1,0 +1,12 @@
+<div id="log" class="mt">
+<div class="bar"><b>Log</b>
+  <span class="seg">
+    {% for kind, label in [('ekspor', 'Ekspor'), ('login', 'Login'), ('kamera', 'Perubahan kamera')] %}
+    <button type="button" class="btn{% if kind == log_kind %} on{% endif %}" hx-get="/log/{{ kind }}" hx-target="#log" hx-swap="outerHTML">{{ label }}</button>
+    {% endfor %}
+  </span></div>
+<table class="tbl"><tr><th>Waktu</th><th>Pelaku</th><th>Kejadian</th></tr>
+{% for r in log_rows %}<tr><td class="nowrap">{{ r.waktu | logtime }}</td><td>{{ r.pelaku }}</td><td>{{ r.keterangan }}</td></tr>
+{% else %}<tr><td colspan="3" class="muted">Belum ada catatan.</td></tr>
+{% endfor %}</table>
+</div>

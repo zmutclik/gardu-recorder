@@ -1,0 +1,21 @@
+<div id="riwayat" hx-get="/export" hx-swap="outerHTML" hx-trigger="export-added from:body{% if running %}, every 3s{% endif %}">
+<div class="bar"><b>Riwayat ekspor · hari ini</b><span class="sp"></span><span class="muted">{{ done }} selesai</span></div>
+<table class="tbl">
+<tr><th>Jam</th><th>Kamera</th><th>Rentang</th><th>Pemohon</th><th>Ukuran</th><th>Status</th><th></th></tr>
+{% for r in rows %}
+<tr>
+  <td>{{ r.waktu | localtime('%H:%M') }}</td>
+  <td>{{ r.nama }}</td>
+  <td class="nowrap">{{ r.range }}</td>
+  <td>{{ r.pemohon }}</td>
+  <td class="nowrap">{{ r.ukuran | filesize }}</td>
+  <td>{% if r.status == 'proses' %}<span class="tag">MEMPROSES…</span>{% elif r.status == 'siap' %}<span class="tag">SIAP</span>{% else %}<span class="tag off">GAGAL</span> {{ r.pesan }}{% endif %}</td>
+  <td class="nowrap">{% if r.file_ok %}<a class="btn sm" href="/export/{{ r.id }}/download" download>⬇ Unduh</a>
+    {% elif r.status == 'siap' %}<span class="muted">file dihapus otomatis</span> <a class="btn sm" href="/export?{{ r.retry }}">Ulangi</a>
+    {% elif r.status == 'gagal' %}<a class="btn sm" href="/export?{{ r.retry }}">Ulangi</a>{% endif %}</td>
+</tr>
+{% else %}
+<tr><td colspan="7" class="muted">Belum ada ekspor hari ini.</td></tr>
+{% endfor %}
+</table>
+</div>

@@ -1,0 +1,27 @@
+<div id="cam-table" hx-get="/cameras/table" hx-include="#filters" hx-swap="outerHTML"
+  hx-trigger="camera-saved from:body{% if connecting %}, every 3s{% endif %}">
+<p class="muted">{{ rows | length }} dari {{ total }} kamera</p>
+<table class="tbl">
+<tr><th></th><th>Kamera</th><th>Alamat</th><th>Kualitas</th><th>Status</th><th>Bitrate</th><th>Restart</th><th>Data terakhir</th><th></th></tr>
+{% for rec in rows %}{% set c = rec.cam %}
+<tr id="row-{{ c.id }}">
+  <td>{% if rec.state == 'online' %}<img class="th" src="/cameras/{{ c.id }}/snapshot" alt="" loading="lazy" width="54" height="32">{% else %}<span class="th"></span>{% endif %}</td>
+  <td><b>{{ c.name }}</b><br><span class="muted">{{ c.id }}</span></td>
+  <td>{{ c.ip }}:{{ c.port }}</td>
+  <td>{{ 'HD' if c.quality else 'SD' }} · {{ c.fps }} fps</td>
+  <td>{% if rec.state == 'online' %}<span class="tag">ONLINE</span>{% elif rec.state == 'connecting' %}<span class="tag off">MENGHUBUNGKAN…</span>{% else %}<span class="tag off">OFFLINE</span>{% endif %}</td>
+  <td>{% if rec.state == 'online' %}{{ rec.mbps | num(1) }} Mbps{% else %}—{% endif %}</td>
+  <td>{{ rec.restarts }}×</td>
+  <td>{{ rec.last_data | clock }}</td>
+  <td class="nowrap">
+    <button type="button" class="btn sm" hx-post="/cameras/{{ c.id }}/test" hx-target="#rs-{{ c.id }}" hx-swap="innerHTML" hx-disabled-elt="this">Uji</button>
+    <button type="button" class="btn sm" hx-get="/cameras/{{ c.id }}/edit" hx-target="#modal" hx-swap="innerHTML">Ubah</button>
+    <button type="button" class="btn sm danger" hx-get="/cameras/{{ c.id }}/hapus" hx-target="#modal" hx-swap="innerHTML">Hapus</button>
+  </td>
+</tr>
+<tr class="rs"><td colspan="9" id="rs-{{ c.id }}"></td></tr>
+{% else %}
+<tr><td colspan="9" class="muted">{{ 'Belum ada kamera. Klik “Tambah”.' if not total else 'Tidak ada kamera yang cocok.' }}</td></tr>
+{% endfor %}
+</table>
+</div>

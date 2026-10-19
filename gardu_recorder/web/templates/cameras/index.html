@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Kamera — Gardu{% endblock %}
+{% block content %}
+<form id="filters" class="bar" method="get" action="/cameras">
+  <b>Kamera</b>
+  <input class="input" name="q" value="{{ q }}" placeholder="Cari nama / id / IP…" autocomplete="off"
+    hx-get="/cameras/table" hx-trigger="input changed delay:300ms" hx-target="#cam-table" hx-swap="outerHTML" hx-include="#filters">
+  <select class="input" name="status" hx-get="/cameras/table" hx-trigger="change" hx-target="#cam-table" hx-swap="outerHTML" hx-include="#filters">
+    <option value="all"{% if status == 'all' %} selected{% endif %}>Semua status</option>
+    <option value="online"{% if status == 'online' %} selected{% endif %}>Online</option>
+    <option value="connecting"{% if status == 'connecting' %} selected{% endif %}>Menghubungkan</option>
+    <option value="offline"{% if status == 'offline' %} selected{% endif %}>Offline</option>
+  </select>
+  <span class="sp"></span>
+  <button type="button" class="btn on" hx-get="/cameras/new" hx-target="#modal" hx-swap="innerHTML">＋ Tambah</button>
+</form>
+{% include "cameras/_table.html" %}
+{% endblock %}

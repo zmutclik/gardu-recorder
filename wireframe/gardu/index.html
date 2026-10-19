@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gardu — Prototipe wireframe</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+<div class="app shell">
+<div class="topnav"><span class="brand">GARDU</span>
+<a href="#/dashboard" data-v="dashboard">Dashboard</a><a href="#/live" data-v="live">Live View</a><a href="#/rekaman" data-v="rekaman">Rekaman</a><a href="#/ekspor" data-v="ekspor">Ekspor</a><a href="#/kamera" data-v="kamera">Kamera</a>
+<span class="sp"></span><a href="#">Keluar</a></div>
+<div class="toast" id="toast"></div>
+
+<!-- ===== DASHBOARD ===== -->
+<div class="page view" id="v-dashboard">
+<div class="bar"><b>Dashboard</b><span class="muted">Diperbarui <b id="d-t">14:37:00</b></span><span class="sp"></span>
+<span class="muted">Segarkan otomatis (10 dtk)</span><span class="sw on" id="d-sw"></span><button class="btn" id="d-r">⟳ Segarkan</button></div>
+<div class="kpi4">
+ <div id="k-on" data-go="kamera"></div>
+ <div><span>Disk NAS</span><b>59%</b><span>2.350 dari 4.000 GB</span></div>
+ <div><span>Retensi</span><b>14 hari</b><span>maks aman ±20 hari · tertua 5 Okt</span></div>
+ <div><span>Bitrate total</span><b id="d-b"></b><span id="d-gb"></span></div>
+</div>
+<div class="info3">
+ <div class="icard"><div class="lb">Live view</div><div class="hl"><span class="tag">AKTIF</span><small>HLS lewat Gardu</small></div>
+  <div class="r"><span>MediaMTX</span><span><code>127.0.0.1:8554</code> (internal)</span></div><div class="r"><span>Jeda</span><span>±2–6 detik</span></div><div class="r"><span>Kamera tayang</span><span id="i-tay"></span></div></div>
+ <div class="icard"><div class="lb">Keamanan &amp; ekspor</div><div class="hl">Sesi 12 jam</div>
+  <div class="r"><span>Kunci percobaan</span><span>5 salah → 5 menit</span></div><div class="r"><span>Password web</span><span>hash bcrypt</span></div><div class="r"><span>Ekspor maksimum</span><span>2 jam · nama wajib</span></div></div>
+ <div class="icard"><div class="lb">Aplikasi</div><div class="hl">v0.1.0<small>Asia/Jakarta</small></div>
+  <div class="r"><span>Aktif sejak</span><span>3 hari 4 jam</span></div><div class="r"><span>Basis data</span><span>SQLite · 3,2 MB</span></div><div class="r"><span>Kamera terdaftar</span><span id="i-reg"></span></div></div>
+</div>
+<div class="bar" style="margin-top:12px"><b>Log</b><span class="seg tg" id="lg"><button class="btn on" data-l="e">Ekspor</button><button class="btn" data-l="l">Login</button><button class="btn" data-l="k">Perubahan kamera</button></span></div>
+<div id="lg-body"></div>
+</div>
+
+<!-- ===== LIVE VIEW ===== -->
+<div class="page view hide" id="v-live">
+<div class="bar"><b>Live View</b><span class="muted" id="g-n"></span><span class="sp"></span>
+ <span class="muted">Tampilan</span><span class="seg" id="g-seg"><button class="btn" data-n="1">1</button><button class="btn" data-n="4">4</button><button class="btn on" data-n="9">9</button></span>
+ <button class="btn" id="g-full">⛶ Layar penuh</button></div>
+<div class="grid g9" id="g-grid"></div>
+<div class="g-strip hide" id="g-strip"></div>
+<div class="hint">Jeda HLS ±2–6 dtk. Bila browser tak bisa memutar H.265: tampil pesan "Format video tidak didukung browser ini" + tombol Unduh/VLC.</div>
+</div>
+
+<!-- ===== REKAMAN ===== -->
+<div class="page view hide" id="v-rekaman">
+<div class="bar"><b>Rekaman</b><select class="btn" id="r-cam"></select>
+ <span class="seg"><button class="btn">‹</button><button class="btn">18 Okt 2026 ▾</button><button class="btn">›</button></span><span class="sp"></span></div>
+<div class="big"><div class="tile"><span class="play">▶</span><span class="st"><span class="tag">REKAMAN</span></span><span class="tm now-play" id="r-now"></span><span class="nm" id="r-nm"></span></div></div>
+<div class="ctl"><button class="btn sm">⏮ Menit sebelumnya</button><button class="btn sm">❚❚ Jeda</button><button class="btn sm">Menit berikutnya ⏭</button>
+ <span class="muted">Kecepatan</span><span class="seg tg"><button class="btn sm on">1×</button><button class="btn sm">2×</button><button class="btn sm">4×</button></span>
+ <span class="sp"></span><button class="btn sm">⬇ Unduh segmen</button></div>
+<div class="bar"><b>Pilih jam</b><span class="muted">angka kecil = jumlah menit yang terekam</span></div>
+<div class="hrs" id="hrs"></div>
+<div class="bar"><b id="h-title"></b><span class="muted">klik menit untuk memutar</span></div>
+<div class="mins" id="mins"></div>
+<div class="ticks"><span>:00</span><span>:15</span><span>:30</span><span>:45</span><span>:59</span></div>
+<div class="hint">Bila browser tak bisa memutar H.265: pesan "Format video tidak didukung browser ini" + tombol Unduh / buka di VLC. Menit berikutnya dimuat diam-diam (2 elemen &lt;video&gt;) agar sambungan mulus.</div>
+</div>
+
+<!-- ===== EKSPOR ===== -->
+<div class="page view hide" id="v-ekspor">
+<div class="bar"><b>Ekspor rekaman</b><span class="muted">tiap ekspor dicatat; bisa lebih dari satu sekaligus</span></div>
+<div class="cols"><div>
+ <div class="form">
+  <label class="field wide">Kamera<select id="x-cam"></select></label>
+  <label class="field wide">Tanggal<input type="date" id="x-d" value="2026-10-18"></label>
+  <label class="field">Jam mulai<input type="time" id="x-s" value="14:00"></label>
+  <label class="field">Jam selesai<input type="time" id="x-e" value="14:30"></label>
+  <label class="field wide">Nama pemohon (dicatat di log)<input type="text" id="x-n" placeholder="mis. Siti – Satpam shift pagi"></label></div>
+ <div class="sumbox" id="x-sum"></div><div class="err" id="x-err"></div>
+ <button class="btn on" id="x-btn">＋ Tambah ke antrean</button></div>
+ <div><div class="bar"><b>Riwayat ekspor · hari ini</b><span class="sp"></span><span class="muted" id="x-c"></span></div>
+ <table class="tbl" id="x-tbl"></table></div></div>
+<div class="hint">Segmen 1 menit digabung tanpa re-encode (cepat). Hasil tetap H.265: bila penerima tidak bisa memutarnya, sarankan VLC. Maksimal 2 jam per ekspor.</div>
+</div>
+
+<!-- ===== KAMERA ===== -->
+<div class="page view hide" id="v-kamera">
+<div class="bar"><b>Kamera</b><input class="btn" id="t-q" placeholder="Cari nama / id / IP…" style="width:200px">
+<select class="btn" id="t-s"><option value="all">Semua status</option><option value="1">Online</option><option value="0">Offline</option></select><span class="sp"></span><span class="muted" id="c2-n"></span><button class="btn on" id="k-add">＋ Tambah</button></div>
+<table class="tbl" id="tbl"></table>
+</div>
+
+<!-- modal kamera -->
+<div class="modal hide" id="km"><div class="dlg"><div class="bar"><b id="km-t">Tambah kamera</b><span class="sp"></span><button class="btn sm" data-x>✕</button></div>
+<div class="form">
+ <label class="field" style="grid-column:span 2">Nama kamera<input data-f="name"></label>
+ <label class="field">IP kamera<input data-f="ip"></label><label class="field">Device ID<input data-f="dev"></label>
+ <label class="field">Username<input data-f="usr" value="admin"></label><label class="field">Password<input data-f="pwd" type="password" placeholder="wajib"></label>
+ <label class="field">Kualitas<select data-f="q"><option value="1">HD (1)</option><option value="0">SD (0)</option></select></label><label class="field">FPS (hasil ffprobe)<input data-f="fps" value="16"></label></div>
+<div class="muted" data-id style="margin-bottom:6px"></div><div data-res></div><div class="err" data-err></div>
+<div class="bar"><button class="btn" data-test>Uji koneksi</button><span class="sp"></span><button class="btn" data-x>Batal</button><button class="btn on" data-save>Simpan</button></div>
+<div class="muted" style="font-size:11px">Password disimpan terenkripsi. Mengubah IP/akun hanya memulai ulang pipeline kamera ini.</div></div></div>
+<div class="modal hide" id="kd"><div class="dlg"><b id="kd-t">Hapus kamera?</b>
+<p style="font-size:12px;margin:8px 0">Pipeline kamera dihentikan dan kamera hilang dari daftar. <b>Rekaman yang sudah ada di NAS tidak dihapus</b>; dibersihkan sesuai retensi.</p>
+<div class="bar"><span class="sp"></span><button class="btn" data-x>Batal</button><button class="btn on danger" data-del>Hapus kamera</button></div></div></div>
+</div>
+<script src="app.js"></script>
+</body></html>

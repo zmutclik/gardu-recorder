@@ -1,0 +1,45 @@
+# MediaMTX untuk live view Gardu (diuji dengan v1.21.1). Kunci yang tidak ditulis memakai nilai bawaan MediaMTX.
+# Semua listener hanya di 127.0.0.1: recorder publish lewat RTSP, Gardu meneruskan HLS ke browser setelah login.
+logLevel: warn
+
+authMethod: internal
+authInternalUsers:
+  # Publish hanya recorder Gardu: proses lain di host (network_mode: host) tidak bisa memalsukan stream kamera.
+  # pass diisi lewat env MTX_AUTHINTERNALUSERS_0_PASS (= GARDU_MEDIAMTX_HLS_SECRET); urutan entri ini jangan diubah.
+  - user: gardu
+    pass:
+    ips: ["127.0.0.1", "::1"]
+    permissions:
+      - action: publish
+  - user: any
+    pass:
+    ips: ["127.0.0.1", "::1"]
+    permissions:
+      - action: read
+
+rtsp: true
+rtspTransports: [tcp]
+rtspAddress: 127.0.0.1:8554
+
+hls: true
+hlsAddress: 127.0.0.1:8888
+hlsAllowOrigins: []
+hlsVariant: fmp4            # H.265 di HLS wajib fMP4; bukan lowLatency agar tidak ada long-poll lewat proxy
+hlsAlwaysRemux: true        # playlist siap sebelum ada penonton: tile live langsung tampil
+hlsSegmentCount: 5
+hlsSegmentDuration: 1s      # segmen tetap dipotong di keyframe: GOP kamera menentukan jeda sebenarnya
+# hlsCDNSecret diisi lewat env MTX_HLSCDNSECRET (docker-compose.yml di root, dari GARDU_MEDIAMTX_HLS_SECRET).
+# Gardu mengirimnya sebagai Bearer: satu sesi HLS per kamera, tanpa redirect cookieCheck per penonton.
+
+api: false
+metrics: false
+pprof: false
+playback: false
+rtmp: false
+webrtc: false
+srt: false
+moq: false
+
+paths:
+  all_others:
+    source: publisher       # path /<id-kamera> dibuat saat recorder publish

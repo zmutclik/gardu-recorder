@@ -1,0 +1,28 @@
+<div class="modal">
+<div class="dlg" role="dialog" aria-modal="true">
+  <div class="bar"><b>{{ 'Tambah kamera' if mode == 'add' else 'Ubah kamera · ' ~ v.name }}</b><span class="sp"></span><button type="button" class="btn sm" data-close aria-label="Tutup">✕</button></div>
+  <form id="cam-form" {% if mode == 'add' %}hx-post="/cameras"{% else %}hx-put="/cameras/{{ cam_id }}"{% endif %} hx-target="#modal" hx-swap="innerHTML">
+    <input type="hidden" name="cam_id" value="{{ cam_id }}">
+    <input type="hidden" name="port" value="{{ v.port or 8800 }}">
+    <div class="form">
+      <label class="field wide">Nama kamera<input name="name" value="{{ v.name or '' }}" maxlength="80" required></label>
+      <label class="field">IP kamera<input name="ip" value="{{ v.ip or '' }}" maxlength="45" required></label>
+      <label class="field">Device ID<input name="device_id" value="{{ v.device_id or '' }}" inputmode="numeric" required></label>
+      <label class="field">Username<input name="username" value="{{ v.username or '' }}" maxlength="64" required></label>
+      <label class="field">Password<input name="password" type="password" autocomplete="new-password" maxlength="128" placeholder="{{ 'wajib' if mode == 'add' else 'kosongkan = tidak diubah' }}"></label>
+      <label class="field">Kualitas<select name="quality"><option value="1"{% if v.quality | string != '0' %} selected{% endif %}>HD (1)</option><option value="0"{% if v.quality | string == '0' %} selected{% endif %}>SD (0)</option></select></label>
+      <label class="field">FPS (hasil ffprobe)<input name="fps" value="{{ v.fps or 16 }}" inputmode="numeric"></label>
+    </div>
+    <div class="muted">{% if mode == 'add' %}ID kamera dibuat dari nama (huruf kecil, tanda hubung; diberi akhiran -2, -3… bila sudah dipakai).{% else %}ID kamera: {{ cam_id }} (tidak berubah){% endif %}</div>
+    <div id="cam-test"></div>
+    <div class="err" role="alert">{% for e in errors %}⚠ {{ e }}{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
+    <div class="bar">
+      <button type="button" class="btn" hx-post="/cameras/test" hx-include="#cam-form" hx-target="#cam-test" hx-swap="innerHTML" hx-disabled-elt="this">Uji koneksi</button>
+      <span class="sp"></span>
+      <button type="button" class="btn" data-close>Batal</button>
+      <button type="submit" class="btn on">Simpan</button>
+    </div>
+  </form>
+  <div class="muted">Password disimpan terenkripsi. Mengubah IP/akun hanya memulai ulang pipeline kamera ini.</div>
+</div>
+</div>

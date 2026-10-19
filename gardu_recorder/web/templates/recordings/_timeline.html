@@ -1,0 +1,22 @@
+<div id="timeline" data-jam="{{ jam }}">
+<div class="bar"><b>Pilih jam</b><span class="muted">angka kecil = jumlah menit yang terekam</span></div>
+<div class="hrs">
+  {% for h in hours %}
+  {% if h.dis %}<span class="btn dis">{{ '%02d' % h.h }}<small>—</small></span>
+  {% else %}{% set url = '/recordings?cam=' ~ cam.id ~ '&tgl=' ~ day ~ '&jam=' ~ h.h %}
+  <a class="btn{% if h.h == jam %} on{% endif %}" href="{{ url }}" hx-get="{{ url }}" hx-target="#timeline" hx-swap="outerHTML"
+    hx-push-url="true">{{ '%02d' % h.h }}<small>{{ h.n }} mnt</small></a>
+  {% endif %}
+  {% endfor %}
+</div>
+<div class="bar"><b>Jam {{ '%02d' % jam }}:00–{{ '%02d' % jam }}:59</b><span class="muted">klik menit untuk memutar</span><span class="sp"></span>
+  {% if recorded %}<a class="btn sm" href="/export?cam={{ cam.id }}&amp;tgl={{ day }}&amp;mulai={{ '%02d' % jam }}:00&amp;selesai={{ '%02d' % ((jam + 1) % 24) }}:00">Ekspor jam ini…</a>{% endif %}</div>
+<div class="mins" id="mins">
+  {% for m in minutes %}
+  {% if m.state == 'ada' %}<button type="button" data-t="{{ m.t }}" title="{{ m.t }}"></button>
+  {% else %}<button type="button" class="{{ 'g' if m.state == 'kosong' else 'n' }}" title="{{ m.t }}{{ ' · tidak ada rekaman' if m.state == 'kosong' else '' }}" disabled></button>
+  {% endif %}
+  {% endfor %}
+</div>
+<div class="ticks"><span>:00</span><span>:15</span><span>:30</span><span>:45</span><span>:59</span></div>
+</div>

@@ -1,0 +1,6 @@
+# Context build = root repo; hanya kode aplikasi yang masuk image (bukan .env, .venv, data, rekaman)
+*
+!gardu_recorder/
+gardu_recorder/.env
+**/__pycache__
+**/*.pyc

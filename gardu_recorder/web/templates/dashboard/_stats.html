@@ -1,0 +1,32 @@
+<div id="stats"{% if auto %} hx-get="/dashboard/stats?auto=1" hx-trigger="every 10s" hx-swap="outerHTML"{% endif %}>
+<div class="bar"><b>Dashboard</b><span class="muted">Diperbarui <b>{{ s.now | clock }}</b></span><span class="sp"></span>
+  <span class="muted">Segarkan otomatis (10 dtk)</span>
+  <button type="button" class="sw{% if auto %} on{% endif %}" role="switch" aria-checked="{{ 'true' if auto else 'false' }}" aria-label="Segarkan otomatis"
+    hx-get="/dashboard/stats?auto={{ 0 if auto else 1 }}" hx-target="#stats" hx-swap="outerHTML"></button>
+  <button type="button" class="btn" hx-get="/dashboard/stats?auto={{ 1 if auto else 0 }}" hx-target="#stats" hx-swap="outerHTML">⟳ Segarkan</button></div>
+<div class="kpi4">
+  <a href="/cameras"{% if s.offline_names %} class="bad"{% endif %}><span>Kamera online</span><b>{{ s.online }} / {{ s.total }}</b>
+    <span>{% if s.offline_names %}{{ s.offline_names | length }} offline: {{ s.offline_names | join(', ') }}{% else %}{{ 'semua online' if s.total else 'belum ada kamera' }}{% endif %}</span></a>
+  <div{% if s.disk and s.disk.percent > s.disk_max %} class="bad"{% endif %}><span>Disk NAS</span>
+    {% if s.disk %}<b>{{ s.disk.percent }}%</b><span>{{ s.disk.used_gb | num }} dari {{ s.disk.total_gb | num }} GB · batas {{ s.disk_max }}%</span>
+    {% else %}<b>—</b><span>folder rekaman tidak terbaca</span>{% endif %}</div>
+  <div{% if s.retention_short %} class="bad"{% endif %}><span>Retensi</span><b>{{ s.retention_days }} hari</b>
+    <span>{% if s.max_safe_days is not none %}maks aman ±{{ s.max_safe_days }} hari{% if s.retention_short %} — retensi efektif lebih pendek{% endif %}{% elif s.mbps and s.sizing %}maks aman: menghitung ukuran rekaman…{% else %}maks aman: menunggu kamera online{% endif %}{% if s.oldest %} · tertua {{ s.oldest | tanggal }}{% endif %}</span></div>
+  <div><span>Bitrate total</span><b>{{ s.mbps | num(1) }} Mbps</b><span>≈ {{ s.gb_per_day | num }} GB / hari</span></div>
+</div>
+<div class="info3">
+  <div class="icard"><div class="lb">Live view</div>
+    <div class="hl"><span class="tag{% if not s.live.enabled %} off{% endif %}">{{ 'AKTIF' if s.live.enabled else 'NONAKTIF' }}</span><small>HLS lewat Gardu</small></div>
+    <div class="r"><span>MediaMTX</span><span><code>{{ s.live.mediamtx_url | replace('rtsp://', '') }}</code> (internal)</span></div>
+    <div class="r"><span>Jeda</span><span>±2–6 detik</span></div>
+    <div class="r"><span>Kamera tayang</span><span>{% if s.live.enabled %}{{ s.online }} dari {{ s.total }}{% else %}—{% endif %}</span></div></div>
+  <div class="icard"><div class="lb">Keamanan &amp; ekspor</div><div class="hl">Sesi 12 jam</div>
+    <div class="r"><span>Kunci percobaan</span><span>5 salah → 5 menit</span></div>
+    <div class="r"><span>Password web</span><span>plain text (.env)</span></div>
+    <div class="r"><span>Ekspor maksimum</span><span>2 jam · nama wajib</span></div></div>
+  <div class="icard"><div class="lb">Aplikasi</div><div class="hl">v{{ s.version }}</div>
+    <div class="r"><span>Aktif sejak</span><span>{{ s.uptime | duration }}</span></div>
+    <div class="r"><span>Basis data</span><span>SQLite · {{ (s.db_bytes / 1048576) | num(1) }} MB</span></div>
+    <div class="r"><span>Kamera terdaftar</span><span>{{ s.total }}</span></div></div>
+</div>
+</div>

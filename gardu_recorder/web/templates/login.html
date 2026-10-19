@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Masuk — Gardu</title>
+  <link rel="stylesheet" href="{{ static_url('css/app.css') }}">
+</head>
+<body>
+<form class="login" method="post" action="/login">
+  <h1>GARDU</h1>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <label class="field">Password
+    <input type="password" name="password" autocomplete="current-password" autofocus required maxlength="256">
+  </label>
+  <div class="err" role="alert">{{ error }}</div>
+  <button class="btn on" type="submit">Masuk</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<div id="x-sum" hx-get="/export/ringkasan" hx-target="this" hx-include="closest form" hx-trigger="change from:closest form" hx-swap="outerHTML">
+<div class="sumbox">
+  {% if sum %}
+  <span>Rentang<b>{{ sum.range }} ({{ sum.minutes }} mnt)</b></span>
+  <span>Segmen<b>{{ sum.files }} file</b></span>
+  <span>Perkiraan ukuran<b>{{ sum.size | filesize if sum.files else '—' }}</b></span>
+  <span>Nama file<b class="fn">{{ sum.filename }}</b></span>
+  {% else %}
+  <span>Durasi<b>—</b></span><span>Segmen<b>—</b></span><span>Perkiraan ukuran<b>—</b></span>
+  {% endif %}
+</div>
+<div class="err" role="alert">{% for e in errors %}⚠ {{ e }}{% if not loop.last %}<br>{% endif %}{% endfor %}</div>
+</div>

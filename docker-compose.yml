@@ -1,0 +1,35 @@
+# Jalankan dari root repo: docker compose up -d (variabel dibaca dari .env di sebelah file ini)
+services:
+  gardu-recorder:
+    build:
+      context: .
+      args:                 # pemilik folder rekaman di NAS (ls -n /volume2/gardu/recordings)
+        GARDU_UID: ${GARDU_UID:-1000}
+        GARDU_GID: ${GARDU_GID:-1000}
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      GARDU_DATA_DIR: /data
+      GARDU_STORAGE_PATH: /recordings
+    network_mode: host      # akses langsung ke kamera :8800 dan MediaMTX (127.0.0.1:8554 / :8888)
+    volumes:
+      - /volume2/gardu/recordings:/recordings
+      - gardu-data:/data    # SQLite gardu.db (kamera, log audit) + /data/exports; sertakan dalam cadangan
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  gardu-live:
+    image: bluenviron/mediamtx:1.21.1
+    restart: unless-stopped
+    network_mode: host      # listener hanya 127.0.0.1 (lihat deploy/mediamtx.yml): tidak terbuka ke jaringan
+    environment:
+      MTX_HLSCDNSECRET: ${GARDU_MEDIAMTX_HLS_SECRET:?isi GARDU_MEDIAMTX_HLS_SECRET di .env}
+      MTX_AUTHINTERNALUSERS_0_PASS: ${GARDU_MEDIAMTX_HLS_SECRET}   # password publish user "gardu"
+    volumes:
+      - ./deploy/mediamtx.yml:/mediamtx.yml:ro
+
+volumes:
+  gardu-data:

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Live View — Gardu{% endblock %}
+{% block scripts %}{% if enabled %}
+<script defer src="{{ static_url('js/vendor/hls.min.js') }}"></script>
+<script defer src="{{ static_url('js/live.js') }}"></script>
+{% endif %}{% endblock %}
+{% macro msg(t) -%}
+{%- if t.state == 'online' %}Memuat…{% elif t.state == 'connecting' %}Menghubungkan…{% else %}⚠ Offline — mencoba ulang (restart {{ t.restarts }}×){% endif -%}
+{%- endmacro %}
+{% macro tag(t) -%}
+<span class="tag off" data-tag>{{ 'MENGHUBUNGKAN' if t.state == 'connecting' else 'OFFLINE' if t.state == 'offline' else 'MEMUAT' }}</span>
+{%- endmacro %}
+{% block content %}
+<div class="bar"><b>Live View</b><span class="muted">{{ online }} dari {{ total }} kamera online</span><span class="sp"></span>
+  {% if enabled and total %}
+  <span class="muted">Tampilan</span>
+  <span class="seg">{% for k in (1, 4, 9) %}<a class="btn{% if k == n %} on{% endif %}" href="/live?n={{ k }}{% if k == 1 and selected %}&amp;cam={{ selected }}{% endif %}">{{ k }}</a>{% endfor %}</span>
+  {% if n == 1 %}<button type="button" class="btn" data-fullscreen>⛶ Layar penuh</button>
+  {% else %}<a class="btn" href="/live?n=1{% if tiles %}&amp;cam={{ tiles[0].id }}{% endif %}">⛶ Layar penuh</a>{% endif %}
+  {% endif %}
+</div>
+
+{% if not enabled %}
+<p class="muted">Live view nonaktif. Jalankan MediaMTX (<code>deploy/mediamtx.yml</code>) lalu set
+  <code>GARDU_LIVE_ENABLED=true</code> di <code>.env</code> dan mulai ulang Gardu.</p>
+{% elif not total %}
+<p class="muted">Belum ada kamera. Tambahkan kamera di menu <a href="/cameras">Kamera</a>.</p>
+{% else %}
+<div class="grid g{{ n }}" id="live-grid">
+  {% for t in tiles %}
+  <div class="tile live{% if t.state != 'online' %} offline{% endif %}" data-live="/live/{{ t.id }}/index.m3u8">
+    <video muted playsinline></video>
+    <span class="st">{{ tag(t) }}</span>
+    <span class="nm">{{ t.name }}</span>
+    <span class="vmsg" data-msg>{{ msg(t) }}</span>
+    {% if n != 1 %}<a class="cover" href="/live?n=1&amp;cam={{ t.id }}" aria-label="Tampilkan {{ t.name }} saja"></a>{% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% if n == 1 %}
+<div class="strip">
+  {% for t in strip %}
+  <a class="tile thumb{% if t.state != 'online' %} offline{% endif %}" href="/live?n=1&amp;cam={{ t.id }}">
+    {% if t.state == 'online' %}<img src="/cameras/{{ t.id }}/snapshot" alt="" loading="lazy">{% else %}<span>{{ 'Menghubungkan…' if t.state == 'connecting' else 'Offline' }}</span>{% endif %}
+    <span class="nm">{{ t.name }}</span>
+  </a>
+  {% endfor %}
+</div>
+{% elif pages > 1 %}
+<div class="bar mt"><span class="sp"></span>
+  {% if hal > 1 %}<a class="btn sm" href="/live?n={{ n }}&amp;hal={{ hal - 1 }}">‹ Sebelumnya</a>{% endif %}
+  <span class="muted">Halaman {{ hal }} dari {{ pages }}</span>
+  {% if hal < pages %}<a class="btn sm" href="/live?n={{ n }}&amp;hal={{ hal + 1 }}">Berikutnya ›</a>{% endif %}
+</div>
+{% endif %}
+<div class="hint">Jeda ±2–6 detik (HLS lewat Gardu). Video H.265: bila browser ini tidak bisa memutarnya, tile menampilkan
+  pesan; pakai Safari, atau Chrome/Edge di PC dengan dekoder H.265.</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Rekaman — Gardu{% endblock %}
+{% block scripts %}<script defer src="{{ static_url('js/rekaman.js') }}"></script>{% endblock %}
+{% block content %}
+{% if not cam %}
+<div class="bar"><b>Rekaman</b></div>
+<p class="muted">Belum ada kamera maupun rekaman. Tambahkan kamera di menu <a href="/cameras">Kamera</a>.</p>
+{% else %}
+<form class="bar" method="get" action="/recordings">
+  <b>Rekaman</b>
+  <select class="input" name="cam" data-autosubmit>
+    {% for c in cams %}<option value="{{ c.id }}"{% if c.id == cam.id %} selected{% endif %}>{{ c.name }}</option>{% endfor %}
+  </select>
+  <span class="seg">
+    {% if prev_day %}<a class="btn" href="/recordings?cam={{ cam.id }}&amp;tgl={{ prev_day }}" title="Hari sebelumnya">‹</a>{% else %}<span class="btn" aria-disabled="true">‹</span>{% endif %}
+    <input class="input" type="date" name="tgl" value="{{ day }}" min="{{ min_day }}" max="{{ today }}" data-autosubmit>
+    {% if next_day %}<a class="btn" href="/recordings?cam={{ cam.id }}&amp;tgl={{ next_day }}" title="Hari berikutnya">›</a>{% else %}<span class="btn" aria-disabled="true">›</span>{% endif %}
+  </span>
+  <noscript><button type="submit" class="btn">Tampilkan</button></noscript>
+</form>
+
+<div class="player" id="player" data-list="/recordings/{{ cam.id }}/{{ day }}" data-base="/recordings/{{ cam.id }}/{{ day }}/"
+  data-timeline="/recordings?cam={{ cam.id }}&amp;tgl={{ day }}" data-label="{{ day | tanggal }} {{ day.year }}"
+  data-live="{{ 1 if day == today else 0 }}"
+  data-next="{% if next_day %}/recordings?cam={{ cam.id }}&amp;tgl={{ next_day }}{% endif %}">
+  <video muted playsinline preload="auto"></video>
+  <video class="hide" muted playsinline preload="auto"></video>
+  <span class="st"><span class="tag">REKAMAN</span></span>
+  <span class="tm" id="r-now">{{ day | tanggal }} {{ day.year }}</span>
+  <span class="nm">{{ cam.name }}</span>
+  <div class="vmsg" id="r-msg">{{ 'Pilih menit di bawah untuk memutar.' if recorded else 'Tidak ada rekaman di tanggal ini.' }}</div>
+</div>
+<div class="prog off" id="r-prog">
+  <span id="r-from">--:--:--</span>
+  <div class="track" role="slider" aria-label="Posisi dalam menit" aria-valuemin="0" aria-valuemax="59" aria-valuenow="0"><span></span></div>
+  <span id="r-to">--:--:--</span>
+</div>
+<div class="ctl">
+  <button type="button" class="btn sm" data-step="-1" disabled>⏮ Menit sebelumnya</button>
+  <button type="button" class="btn sm" id="r-toggle" disabled>❚❚ Jeda</button>
+  <button type="button" class="btn sm" data-step="1" disabled>Menit berikutnya ⏭</button>
+  <span class="muted">Kecepatan</span>
+  <span class="seg">{% for r in (1, 2, 4) %}<button type="button" class="btn sm{% if r == 1 %} on{% endif %}" data-rate="{{ r }}">{{ r }}×</button>{% endfor %}</span>
+  <span class="sp"></span>
+  <a class="btn sm hide" id="r-dl" download>⬇ Unduh segmen</a>
+</div>
+
+{% include "recordings/_timeline.html" %}
+<div class="hint">Segmen 1 menit disambung otomatis. Rekaman berformat H.265: bila browser ini tidak bisa memutarnya,
+  unduh segmen lalu putar di VLC.</div>
+{% endif %}
+{% endblock %}

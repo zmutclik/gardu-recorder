@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Ekspor — Gardu{% endblock %}
+{% block content %}
+<div class="bar"><b>Ekspor rekaman</b><span class="muted">tiap ekspor dicatat; bisa lebih dari satu sekaligus</span></div>
+{% if not cams %}
+<p class="muted">Belum ada kamera maupun rekaman. Tambahkan kamera di menu <a href="/cameras">Kamera</a>.</p>
+{% else %}
+<div class="cols">
+  <div>{% include "export/_form.html" %}</div>
+  <div>{% include "export/_history.html" %}</div>
+</div>
+{% endif %}
+<div class="hint">Segmen 1 menit digabung tanpa re-encode (cepat). Hasil tetap H.265: bila penerima tidak bisa memutarnya,
+  sarankan VLC. Maksimal 2 jam per ekspor; jam selesai lebih kecil dari jam mulai berarti melewati tengah malam.
+  File hasil dihapus otomatis setelah {{ keep_hours }} jam (riwayat tetap tercatat di log).</div>
+{% endblock %}
