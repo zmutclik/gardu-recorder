@@ -5,7 +5,8 @@ __pycache__/
 .pytest_cache/
 .ruff_cache/
 /data/
-/recordings/
+/recordings/*
+!/recordings/.gitkeep
 /.tools/
 *.mp4
 *.db

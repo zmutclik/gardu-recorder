@@ -3,7 +3,7 @@ services:
   gardu-recorder:
     build:
       context: .
-      args:                 # pemilik folder rekaman di NAS (ls -n /volume2/gardu/recordings)
+      args:                 # pemilik folder rekaman (ls -nd recordings)
         GARDU_UID: ${GARDU_UID:-1000}
         GARDU_GID: ${GARDU_GID:-1000}
     restart: unless-stopped
@@ -14,7 +14,7 @@ services:
     network_mode: host      # akses langsung ke kamera :8800 dan MediaMTX (127.0.0.1:8554 / :8888)
     volumes:
       - ./gardu_recorder:/app:ro   # kode aplikasi; update: git pull && docker compose restart gardu-recorder
-      - /volume2/gardu/recordings:/recordings
+      - ${GARDU_RECORDINGS_DIR:-./recordings}:/recordings   # bawaan: folder recordings/ di repo ini
       - gardu-data:/data    # SQLite gardu.db (kamera, log audit) + /data/exports; sertakan dalam cadangan
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request;urllib.request.urlopen('http://127.0.0.1:8080/health',timeout=3)"]
