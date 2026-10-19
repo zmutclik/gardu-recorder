@@ -60,4 +60,4 @@ kunci percobaan login. Lihat `.env.example`.
 
 ## Lisensi
 
-MIT, lihat `LICENSE`. `gardu_recorder/vendor/` punya lisensinya sendiri (MIT).
+MIT, lihat `LICENSE`. Komponen pihak ketiga (hls.js, htmx, v380_stream, MediaMTX, FFmpeg) dan lisensinya: `THIRD_PARTY_NOTICES.md`.
