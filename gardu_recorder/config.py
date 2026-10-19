@@ -2,6 +2,7 @@
 import ipaddress
 import logging
 from pathlib import Path
+from typing import Literal
 
 from cryptography.fernet import Fernet
 from pydantic import BaseModel, Field, field_validator, model_validator
@@ -22,8 +23,9 @@ class Settings(BaseSettings):
     GARDU_DB_KEY: str                             # kunci Fernet password kamera
     GARDU_DATA_DIR: Path = Path("/data")
     DEBUG: bool = False
-    # true = cookie sesi hanya lewat https; dibuka lewat http (selain localhost), login tidak bisa (lihat auth.py)
-    COOKIE_SECURE: bool = True
+    # auto = cookie sesi Secure bila diakses lewat https, biasa bila lewat http; true = selalu Secure (login lewat
+    # http tidak bisa); false = tidak pernah Secure
+    COOKIE_SECURE: Literal["auto"] | bool = "auto"
     DISPLAY_TIMEZONE: str = "Asia/Jakarta"
     HOME_PATH: str = "/dashboard"
 

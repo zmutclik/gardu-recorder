@@ -6,6 +6,7 @@ from fastapi.exception_handlers import request_validation_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, RedirectResponse, Response
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.middleware.sessions import SessionMiddleware
 
 from web import is_htmx, templates
 
@@ -23,6 +24,19 @@ SECURITY_HEADERS = [
     (b"x-frame-options", b"DENY"),
     (b"referrer-policy", b"strict-origin-when-cross-origin"),
 ]
+
+
+class AutoSecureSessionMiddleware:
+    """SessionMiddleware dengan cookie Secure hanya untuk request https (scheme dari uvicorn, termasuk
+    X-Forwarded-Proto proxy yang dipercaya): login jalan lewat http di LAN maupun lewat reverse proxy TLS."""
+
+    def __init__(self, app, **kwargs):
+        self.plain = SessionMiddleware(app, https_only=False, **kwargs)
+        self.secure = SessionMiddleware(app, https_only=True, **kwargs)
+
+    async def __call__(self, scope, receive, send):
+        mw = self.secure if scope.get("scheme") in ("https", "wss") else self.plain
+        await mw(scope, receive, send)
 
 
 class SecurityHeadersMiddleware:

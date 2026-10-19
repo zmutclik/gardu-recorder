@@ -17,6 +17,7 @@ from recorder import RecorderManager
 from starlette.middleware.sessions import SessionMiddleware
 from web import STATIC_DIR
 from web.security import (
+    AutoSecureSessionMiddleware,
     SecurityHeadersMiddleware,
     UnhandledErrorMiddleware,
     install_error_handlers,
@@ -72,8 +73,12 @@ def create_app() -> FastAPI:
     app = FastAPI(lifespan=lifespan, docs_url=None, redoc_url=None, openapi_url=None)
     app.add_middleware(UnhandledErrorMiddleware)       # paling dalam: 500 tetap membawa security headers
     app.add_middleware(SecurityHeadersMiddleware)
-    app.add_middleware(SessionMiddleware, secret_key=settings.GARDU_SECRET, max_age=auth.SESSION_SECONDS,
-                       same_site="strict", https_only=settings.COOKIE_SECURE, session_cookie="gardu_session")
+    session_opts = dict(secret_key=settings.GARDU_SECRET, max_age=auth.SESSION_SECONDS, same_site="strict",
+                        session_cookie="gardu_session")
+    if settings.COOKIE_SECURE == "auto":
+        app.add_middleware(AutoSecureSessionMiddleware, **session_opts)
+    else:
+        app.add_middleware(SessionMiddleware, https_only=settings.COOKIE_SECURE, **session_opts)
     install_error_handlers(app)
 
     app.include_router(auth.router)

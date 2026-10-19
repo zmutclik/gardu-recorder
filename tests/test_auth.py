@@ -98,14 +98,14 @@ def test_lockout_is_atomic_under_concurrency(client):
     assert codes.count(303) == auth.MAX_FAIL and codes.count(429) == 20 - auth.MAX_FAIL
 
 
-def test_login_over_http_with_secure_cookie_explains(client, monkeypatch):
-    monkeypatch.setattr(auth.settings, "COOKIE_SECURE", True)
-    lan = TestClient(client.app, base_url="http://192.168.10.5:8080")
-    assert "COOKIE_SECURE=true" in lan.get("/login").text
-    r = lan.post("/login", data={"password": PASSWORD, "csrf_token": "x"}, follow_redirects=False)
-    assert r.status_code == 403 and "COOKIE_SECURE=true" in r.text
-    https = TestClient(client.app, base_url="https://192.168.10.5")
-    assert "COOKIE_SECURE" not in https.get("/login").text
+def test_cookie_secure_auto_follows_scheme(monkeypatch):
+    import main
+    monkeypatch.setattr(auth.settings, "COOKIE_SECURE", "auto")
+    app = main.create_app()
+    lan = TestClient(app, base_url="http://192.168.10.5:8080")
+    assert "secure" not in lan.get("/login").headers["set-cookie"].lower()
+    https = TestClient(app, base_url="https://192.168.10.5")
+    assert "secure" in https.get("/login").headers["set-cookie"].lower()
 
 
 def test_segment_seconds_must_be_60():

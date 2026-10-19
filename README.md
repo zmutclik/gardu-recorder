@@ -40,8 +40,9 @@ restart gardu-recorder`; `docker compose build` hanya bila `requirements.txt` at
 user non-root `GARDU_UID`/`GARDU_GID` (.env): samakan dengan pemilik folder rekaman di NAS. Volume `gardu-data`
 yang dibuat image lama (milik root) perlu `chown` sekali ke UID itu.
 
-Akses web: `COOKIE_SECURE=true` (bawaan) butuh reverse proxy TLS di depan `127.0.0.1:8080`; dibuka lewat
-`http://<ip>:8080` login tidak bisa (halaman login menjelaskannya). Tanpa TLS di LAN tertutup: `COOKIE_SECURE=false`.
+Akses web: `COOKIE_SECURE=auto` (bawaan) memasang cookie Secure bila dibuka lewat https (reverse proxy TLS di depan
+`127.0.0.1:8080`) dan cookie biasa bila dibuka langsung lewat `http://<ip>:8080` (LAN saja: tidak terenkripsi).
+`COOKIE_SECURE=true` memaksa https.
 Proxy di mesin lain: isi `FORWARDED_ALLOW_IPS` dengan IP-nya, kalau tidak semua petugas tampak satu IP dan berbagi
 kunci percobaan login. Lihat `.env.example`.
 

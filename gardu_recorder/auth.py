@@ -26,16 +26,6 @@ def client_ip(request: Request) -> str:
     return request.client.host if request.client else "-"
 
 
-INSECURE_HTTP = ("Gardu dibuka lewat http, padahal COOKIE_SECURE=true: browser menolak cookie sesi sehingga login "
-                 "tidak bisa. Buka lewat https, atau set COOKIE_SECURE=false di .env (hanya untuk LAN tertutup).")
-
-
-def insecure_http(request: Request) -> bool:
-    """Cookie Secure tidak disimpan browser lewat http (localhost dikecualikan browser)."""
-    return (settings.COOKIE_SECURE and request.url.scheme != "https"
-            and request.url.hostname not in ("localhost", "127.0.0.1", "::1"))
-
-
 def csrf_token(request: Request) -> str:
     """Token CSRF per sesi; dibuat saat pertama diminta (juga untuk halaman login)."""
     token = request.session.get("csrf")
@@ -89,7 +79,7 @@ def _recent_fails(ip: str, now: float) -> list[float]:
 def login_page(request: Request, salah: int = 0):
     if logged_in(request):
         return RedirectResponse(settings.HOME_PATH, status_code=303)
-    error = INSECURE_HTTP if insecure_http(request) else "Password salah." if salah else ""
+    error = "Password salah." if salah else ""
     return render_login(request, csrf_token(request), error=error)
 
 
@@ -98,8 +88,7 @@ def login(request: Request, password: str = Form(..., max_length=256), csrf: str
     ip, now = client_ip(request), time.time()
     expected = request.session.get("csrf", "")
     if not expected or not hmac.compare_digest(csrf, expected):
-        raise HTTPException(403, INSECURE_HTTP if insecure_http(request) else
-                            "Token keamanan tidak valid. Muat ulang halaman.")
+        raise HTTPException(403, "Token keamanan tidak valid. Muat ulang halaman.")
     with _fails_lock:
         recent = _recent_fails(ip, now)
         if len(recent) >= MAX_FAIL:
