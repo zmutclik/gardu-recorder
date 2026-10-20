@@ -14,7 +14,7 @@
 <div class="bar"><b>Live View</b><span class="muted">{{ online }} dari {{ total }} kamera online</span><span class="sp"></span>
   {% if enabled and total %}
   <span class="muted">Tampilan</span>
-  <span class="seg">{% for k in (1, 4, 9) %}<a class="btn{% if k == n %} on{% endif %}" href="/live?n={{ k }}{% if k == 1 and selected %}&amp;cam={{ selected }}{% endif %}">{{ k }}</a>{% endfor %}</span>
+  <span class="seg">{% for k in (1, 4, 9) %}<a class="btn{% if k == n %} on{% endif %}" data-n="{{ k }}" href="/live?n={{ k }}{% if k == 1 and selected %}&amp;cam={{ selected }}{% endif %}">{{ k }}</a>{% endfor %}</span>
   {% if n == 1 %}<button type="button" class="btn" data-fullscreen>⛶ Layar penuh</button>
   {% else %}<a class="btn" href="/live?n=1{% if tiles %}&amp;cam={{ tiles[0].id }}{% endif %}">⛶ Layar penuh</a>{% endif %}
   {% endif %}

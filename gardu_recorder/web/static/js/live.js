@@ -3,6 +3,19 @@
 // online atau MediaMTX yang baru restart tersambung sendiri tanpa memuat ulang halaman.
 (() => {
   const RETRY_MS = 5000;
+
+  // Pilihan jumlah tampilan (1/4/9) disimpan di browser; buka /live tanpa ?n= memakai pilihan terakhir.
+  const KEY = 'gardu.live.n';
+  const seg = document.querySelectorAll('.seg [data-n]');
+  const store = (fn) => { try { return fn(localStorage); } catch { return null; } };
+  const saved = store((ls) => ls.getItem(KEY));
+  const cur = document.querySelector('.seg .on')?.dataset.n;
+  if (saved && saved !== cur && !new URLSearchParams(location.search).has('n')) {
+    const target = [...seg].find((a) => a.dataset.n === saved);
+    if (target) { location.replace(target.href); return; }
+  }
+  for (const a of seg) a.addEventListener('click', () => store((ls) => ls.setItem(KEY, a.dataset.n)));
+
   const tiles = document.querySelectorAll('.tile[data-live]');
   if (!tiles.length) return;
   const useHlsJs = window.Hls && Hls.isSupported();
