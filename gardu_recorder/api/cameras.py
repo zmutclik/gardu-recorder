@@ -15,6 +15,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 from web import render, templates
 
 router = APIRouter(prefix="/cameras", dependencies=protected)
+SNAPSHOT_WIDTHS = (320, 640, 960)           # w di luar daftar ini dipakai 320
 _snapshot_slots = asyncio.Semaphore(2)      # tiap snapshot = satu proses ffmpeg; batasi yang berjalan bersamaan
 
 FIELD_LABELS = {"name": "Nama", "ip": "IP", "port": "Port", "device_id": "Device ID", "username": "Username",
@@ -259,16 +260,17 @@ async def test_saved(request: Request, cam_id: str):
 
 
 @router.get("/{cam_id}/snapshot")
-async def snapshot(request: Request, cam_id: str):
-    """JPEG dari segmen terbaru: tidak membuka koneksi baru ke kamera."""
+async def snapshot(request: Request, cam_id: str, w: int = 320):
+    """JPEG selebar w px (lihat SNAPSHOT_WIDTHS) dari segmen terbaru: tidak membuka koneksi baru ke kamera."""
     rec = request.app.state.manager.recs.get(cam_id)
     if rec is None:
         raise HTTPException(404)
+    w = w if w in SNAPSHOT_WIDTHS else SNAPSHOT_WIDTHS[0]
     async with _snapshot_slots:
         for seg in rec.recent_segments(2):      # terbaru dulu; yang baru mulai ditulis bisa masih kosong
             proc = await asyncio.create_subprocess_exec(
                 "ffmpeg", "-loglevel", "error", "-sseof", "-2", "-i", str(seg), "-frames:v", "1",
-                "-vf", "scale=320:-2", "-q:v", "5", "-f", "image2pipe", "-vcodec", "mjpeg", "-",
+                "-vf", f"scale={w}:-2", "-q:v", "5", "-f", "image2pipe", "-vcodec", "mjpeg", "-",
                 stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.DEVNULL)
             try:
                 out, _ = await asyncio.wait_for(proc.communicate(), 10)

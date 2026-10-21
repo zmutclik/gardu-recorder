@@ -28,7 +28,7 @@
 {% else %}
 <div class="grid g{{ n }}" id="live-grid">
   {% for t in tiles %}
-  <div class="tile live{% if t.state != 'online' %} offline{% endif %}" data-live="/live/{{ t.id }}/index.m3u8">
+  <div class="tile live{% if t.state != 'online' %} offline{% endif %}" data-live="/live/{{ t.id }}/index.m3u8" data-cam="{{ t.id }}">
     <video muted playsinline></video>
     <span class="st">{{ tag(t) }}</span>
     <span class="nm">{{ t.name }}</span>
@@ -53,7 +53,7 @@
   {% if hal < pages %}<a class="btn sm" href="/live?n={{ n }}&amp;hal={{ hal + 1 }}">Berikutnya ›</a>{% endif %}
 </div>
 {% endif %}
-<div class="hint">Jeda ±2–6 detik (HLS lewat Gardu). Video H.265: bila browser ini tidak bisa memutarnya, tile menampilkan
-  pesan; pakai Safari, atau Chrome/Edge di PC dengan dekoder H.265.</div>
+<div class="hint">Jeda ±2–6 detik (HLS lewat Gardu). Video H.265 yang tak bisa diputar browser (mis. Chrome Android) tampil sebagai foto
+  yang diperbarui tiap beberapa detik (tag ◐ FOTO); untuk video penuh pakai Safari, atau Chrome/Edge di PC dengan dekoder H.265.</div>
 {% endif %}
 {% endblock %}
